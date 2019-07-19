@@ -17,7 +17,9 @@ fn main() {
 
         loop {
             let mut packet = Packet::default();
-            socket.read(&mut packet).expect("nulld: failed to read events from null scheme");
+            if socket.read(&mut packet).expect("nulld: failed to read events from null scheme") == 0 {
+                break;
+            }
 
             scheme.handle(&mut packet);
 
